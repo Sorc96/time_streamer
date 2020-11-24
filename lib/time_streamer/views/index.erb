@@ -1,0 +1,42 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <form action='<%= mount_path %>' method='get'>
+      <input type='text' name='search_term' placeholder='<%= @search_placeholder %>'>
+      <input type='submit' value='Find history'>
+    </form>
+
+    <% unless @record.nil? %>
+      <h1>
+        <%= @header %>
+      </h1>
+      <%= erb :attributes, locals: { attributes: @record.serializable_hash } %>
+      <div class='red-text'>
+        Only associations with ids stored in this record reflect the selected version
+      </div>
+      <% @associations.each do |name, associated_records| %>
+      <p>
+        <%= name %>:
+      </p>
+      <% associated_records.each do |associated_record| %>
+      <a href='<%= mount_path %>?search_term=<%= CGI.escape(associated_record) %>'>
+        <%= associated_record %>
+      </a>
+      <% end %>
+      <% end %>
+    <% end %>
+
+    <% @versions.each do |version| %>
+    <div class='version-card'>
+      <%= version.title %>
+      <br/>
+      <%= version.metadata %>
+      <%= erb :attributes, locals: { attributes: version.changes } %>
+      <a href='<%= mount_path %>/<%= CGI.escape(version.id) %>'>
+        Show record at version
+      </a>
+    </div>
+    <% end %>
+  </body>
+</html>
