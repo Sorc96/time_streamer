@@ -4,6 +4,8 @@ require 'sinatra/base'
 
 module TimeStreamer
   class App < Sinatra::Base
+    set :public_folder, File.expand_path('./public', __FILE__)
+    set :static, true
     get '/' do
       puts params
       @search_placeholder = adapter.search_placeholder

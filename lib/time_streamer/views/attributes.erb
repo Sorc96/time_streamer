@@ -5,15 +5,22 @@
       <td>
         <%= key %>
       </td>
-      <td>
       <% if value.is_a?(Array) && value.size == 2 %>
-        <%= value.first.inspect %>
-        <span class='grey-text'>
-          =>
-        </span>
-        <%= value.last.inspect %>
+        <td>
+          <%= value.first.inspect %>
+        </td>
+        <td>
+          <span class='grey-text'>
+            =>
+          </span>
+        </td>
+        <td>
+          <%= value.last.inspect %>
+        </td>
       <% else %>
-        <%= value.inspect %>
+        <td>
+          <%= value.inspect %>
+        </td>
       <% end %>
       </td>
     </tr>
