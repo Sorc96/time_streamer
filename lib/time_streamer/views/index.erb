@@ -1,19 +1,6 @@
 <html>
   <head>
-    <style>
-      html, table { font-size: 14px; }
-      .red-text { color: #e53935; }
-      .grey-text { color: #757575; }
-      .versions { margin-top: 2rem; padding: 1rem; background-color: #f5f5f5; }
-      .version-card { margin-bottom: 2rem; }
-      .version-title, .version-meta { display: inline-block; margin: 1rem 1rem 1rem 0; font-size: 16px; font-weight: 500; }
-      .version-meta { color: #757575; }
-      .link-btn { display: inline-block; background-color: #1e88e5; color: white; margin: 0 0.02rem 0.2rem 0; padding: 0.4rem 1rem; border-radius: 4px; text-decoration: none; }
-      .link-btn:hover { background-color: #01579b; }
-      table { margin-bottom: 1rem; background-color: #fff; }
-      table, th, td { border: 1px solid #bdbdbd; }
-      table > tbody > tr > td { padding: 0.5rem; }
-    </style>
+    <link rel='stylesheet' href='<%= mount_path %>/time_streamer.css'>
   </head>
   <body>
     <form action='<%= mount_path %>' method='get'>
@@ -47,7 +34,7 @@
         <span class="version-title"><%= version.title %></span>
         <span class="version-meta">[ <%= version.metadata %> ]</span>
         <%= erb :attributes, locals: { attributes: version.changes } %>
-        <a href='<%= mount_path %>/<%= CGI.escape(version.id) %>' class="link-btn">
+        <a href='<%= mount_path %>/version/<%= CGI.escape(version.id) %>' class="link-btn">
           Show record at version
         </a>
       </div>

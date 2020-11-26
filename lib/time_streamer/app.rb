@@ -4,8 +4,6 @@ require 'sinatra/base'
 
 module TimeStreamer
   class App < Sinatra::Base
-    set :public_folder, File.expand_path('./public', __FILE__)
-    set :static, true
     get '/' do
       puts params
       @search_placeholder = adapter.search_placeholder
@@ -18,7 +16,7 @@ module TimeStreamer
       erb :index
     end
 
-    get '/:id' do
+    get '/version/:id' do
       @search_placeholder = adapter.search_placeholder
       version = adapter.find_version params[:id]
       @record = adapter.record_at_version version
@@ -30,26 +28,26 @@ module TimeStreamer
     end
 
     ###
-  
+
     def associations_for(parent)
       return if parent.nil?
-  
+
       associations = load_associations parent
       associations.transform_values! do |value|
         Array(value).map { |record| adapter.identifier_for(record) }
       end
       associations.reject { |_, value| value.empty? }
     end
-  
+
     def load_associations(record)
       associations = record.class.reflections.keys - ignored_associations(record.class)
       associations.map { |key| [key, record.send(key)] }.to_h
     end
-  
+
     def format_time(time)
       time.strftime '%Y-%m-%d %H:%M:%S'
     end
-  
+
     def versions_to_view_models(versions)
       versions.map { |version| VersionViewModel.new adapter.version_data(version) }
     end
