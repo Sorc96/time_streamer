@@ -1,5 +1,6 @@
 <html>
   <head>
+    <link rel='stylesheet' href='<%= mount_path %>/time_streamer.css'>
   </head>
   <body>
     <form action='<%= mount_path %>' method='get'>
@@ -20,23 +21,24 @@
         <%= name %>:
       </p>
       <% associated_records.each do |associated_record| %>
-      <a href='<%= mount_path %>?search_term=<%= CGI.escape(associated_record) %>'>
+      <a href='<%= mount_path %>?search_term=<%= CGI.escape(associated_record) %>' class="link-btn">
         <%= associated_record %>
       </a>
       <% end %>
       <% end %>
     <% end %>
 
-    <% @versions.each do |version| %>
-    <div class='version-card'>
-      <%= version.title %>
-      <br/>
-      <%= version.metadata %>
-      <%= erb :attributes, locals: { attributes: version.changes } %>
-      <a href='<%= mount_path %>/<%= CGI.escape(version.id) %>'>
-        Show record at version
-      </a>
+    <div class='versions'>
+      <% @versions.each do |version| %>
+      <div class='version-card'>
+        <span class="version-title"><%= version.title %></span>
+        <span class="version-meta">[ <%= version.metadata %> ]</span>
+        <%= erb :attributes, locals: { attributes: version.changes } %>
+        <a href='<%= mount_path %>/version/<%= CGI.escape(version.id) %>' class="link-btn">
+          Show record at version
+        </a>
+      </div>
+      <% end %>
     </div>
-    <% end %>
   </body>
 </html>
