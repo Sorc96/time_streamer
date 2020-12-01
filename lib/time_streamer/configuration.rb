@@ -8,7 +8,7 @@ module TimeStreamer
     mount_path
   ].freeze
 
-  Configuration = Struct.new(*CONFIGURABLE_VALUES, keyword_init: true)
+  Configuration = Struct.new(*CONFIGURABLE_VALUES)
 
   def self.configure
     yield configuration
@@ -16,10 +16,10 @@ module TimeStreamer
 
   def self.configuration
     @configuration ||= Configuration.new(
-      adapter: Adapters::Audited.new,
-      global_ignored_associations: [],
-      ignored_associations: {},
-      mount_path: '/time_streamer'
+      Adapters::Audited.new, # adapter
+      [],                    # global_ignored_associations
+      {},                    # ignored_associations
+      '/time_streamer'       # mount_path
     )
   end
 end
