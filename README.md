@@ -6,7 +6,19 @@ The web interface allows you to view models at different points in time based on
 
 ## Installation
 
-Not currently released as a gem.
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'time_streamer'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install time_streamer
 
 ## Usage
 
@@ -29,11 +41,13 @@ TimeStreamer.configure do |config|
 end
 ```
 
+The two available adapters are `TimeStreamer::Adapters::Audited` and `TimeStreamer::Adapters::PaperTrail`.
+
 Ignore associations that should not be displayed. For example, the association containing the versions (`audits` for Audited and `versions` for PaperTrail) should probably be ignored.
 
 To ignore associations for specific models, set the `ignored_associations` hash.
 
-*IMPORTANT*: The associations have to be given as strings.
+*IMPORTANT*: The associations have to be given as strings, not symbols!
 ```ruby
 TimeStreamer.configure do |config|
   config.global_ignored_associations = ['audits']
