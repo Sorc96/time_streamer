@@ -49,7 +49,7 @@ module TimeStreamer
     end
 
     def versions_to_view_models(versions)
-      versions.map { |version| VersionViewModel.new adapter.version_data(version) }
+      versions.map { |version| VersionViewModel.new(**adapter.version_data(version)) }
     end
 
     def adapter
